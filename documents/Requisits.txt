@@ -4,22 +4,21 @@
    * Només els usuaris registrats poden fer comandes
    * Els usuaris es poden registrar amb un correu electrònic o amb “shortcuts”
    * Abans de fer la primera comanda l’usuari ha d’omplir un perfil
-   * El nom d'usuari haurà de tenir 5 caràcters com a mínim i no podrà estar repetit dins del sistema
-   * La contrasenya haurà de tenir 8 caràcters com a mínim, amb mínim dues majúscules i dos caràcters especials
    * El perfil d'usuari pot ser actualitzat en tot moment
    * L’usuari s’elimina en el moment que es dona de baixa de l'aplicació
    * Quan es crea el compte s’ha d’escollir un rol (client, repartidor o cuiner)
-   * L’usuari pot tenir els tres rols a la vegada
    * L’usuari pot afegir o treure rols en qualsevol moment
    * El perfil ha d’incloure l’adreça de recollida de la comanda i opcionalment restriccions alimentàries.
 * RNF
    * Integració amb serveis externs de correu (Gmail, Outlook) per facilitar el registre
+   * L’usuari pot tenir els tres rols a la vegada
+   * El nom d'usuari haurà de tenir 5 caràcters com a mínim i no podrà estar repetit dins del sistema
+   * La contrasenya haurà de tenir 8 caràcters com a mínim, amb mínim dues majúscules i dos caràcters especials
 
 
 GRUP 2: REALITZACIÓ DE COMANDES
 * RF
-   * Es mostraran els plats i menús disponibles al moment
-   * Es mostraran primer els plats que compleixin amb les restriccions alimentàries (si és que en té)
+   * Es mostraran els plats i menús disponibles al moment mostrant primer els plats que compleixin amb les restriccions alimentàries (si és que en té)
    * S’ha d’incloure una aproximació del temps d’entrega
    * Escollir entre dues vistes diferents:
       * Un llistat de plats i menús individuals
@@ -28,46 +27,45 @@ GRUP 2: REALITZACIÓ DE COMANDES
    * Hi ha un cercador de noms de plats i noms de cuiners
    * Els cuiners poden aparèixer com no disponibles 
    * Els clients poden reservar una comanda per quan el cuiner estigui disponible
-   * A la comanda es poden consultar els ingredients del plat
+   * A la comanda es poden consultar els ingredients i els al·lèrgens del plat
    * A la comanda es poden modificar els ingredients marcats com a opcionals
-   * Es poden consultar al·lèrgens dels plats
    * Les comandes es poden enviar un cop tancades
-   * Un client no pot tenir més 3 de comandes actives a l’hora (MAX 3)
    * Es pot consultar l’historial de comandes de l’usuari
    * Es pot repetir la comanda si és que està disponible
 * RNF
-________________
+   * Un client no pot tenir més 3 de comandes actives a l’hora (MAX 3)
+
+
 GRUP 3: ENVIAMENT DE COMANDES
-   * RF
+* RF
    * L’aplicació ofereix tres opcions de recollida: repartidor de l’aplicació, entrega pel cuiner o recollida pel client
    * El cost de l’enviament va en funció de la distància entre el client i el cuiner
    * L’enviament és gratuït en cas que el client vagi a buscar-lo
    * Es pot seguir el progrés de la comanda un cop s’ha pagat i l’enviament hagi començat
    * Es mostra la posició actual del repartidor mitjançant Google Maps
-   * RNF
+* RNF
    * Integració amb la interfície de Google Maps per mostrar la ubicació del repartidor.
 
 
 GRUP 4: PAGAMENT DE LA COMANDA
-   * RF
+* RF
    * Permetre al client finalitzar i pagar la seva comanda directament des de la interfície
-   * Permetre pagament mitjançant targeta bancària o PayPal
-   * Connectar i validar amb la plataforma concreta depenent del tipus de pagament
    * Ingrés corresponent al propietari/conductor
    * Associar ingressos bancaris a cada perfil (tant cuiner com repartidor)
-
-
-   * RNF
+* RNF
+   * Permetre pagament mitjançant targeta bancària o PayPal
+   * Connectar i validar amb la plataforma concreta depenent del tipus de pagament
    * Seguretat de pagament del client de forma xifrada mitjançant l'aplicació
 
 
 GRUP 5: VALORACIÓ DE LA COMANDA
-   * RF
-   * Tenir l'opció de poder valorar la qualitat de la comanda
-   * Mostrar un formulari que permeti al client puntuar aspectes de la comanda
+* RF
+   * El client tindrà l'opció de valorar aspectes de la comanda com la puntualitat o l'estat del menjar
    * Associar automàticament les noves valoracions corresponents a cada cuiner (fent mitjana amb les prèvies)
    * Ordenar la llista de plats disponibles depenent de les valoracions personals que té de cada cuiner (més amunt aquells amb més valoració).
-   * RNF
+* RNF
    * Sistema ha d'estar preparat per fer una gran quantitat de càlculs en poc temps
    * Permetre fer només una valoració per client
    * Les valoracions han de ser basades en estrelles de l'1 al 5.
+
+GRUP 6:
