@@ -69,3 +69,27 @@ GRUP 5: VALORACIÓ DE LA COMANDA
    * Les valoracions han de ser basades en estrelles de l'1 al 5.
 
 GRUP 6:
+* RF
+   * Els clients poden proposar plats
+   * Només els cuiners poden accedir al menú dels plats addicionals
+   * Els cuiners poden acceptar les propostes de plats fetes pels clients i comprometre’s a preparar-les.
+   * Es pot crear un xat privat entre el cuiner i el client en cas d’escollir un d’aquest plats addicionals
+   * Hi ha un pla mensual
+   * Hi ha un sistema de punts que es guanyen al fer comandes
+   * Els punts es poden utilitzar per tenir descomptes
+
+ALTRES CONSIDERACIONS:
+* RNF
+   * La plataforma està pensada inicialment per ser utilitzada a l’àrea metropolitana de Barcelona
+   * La app ha d’estar disponible en tres idiomes, català, castellà i anglès
+   * L’aplicació tindrà dues versions, mòbil i web
+   * La versió mòbil haurà de funcionar en dispositius Android
+   * La versió mòbil haurà de funcionar en dispositius amb sistema operatiu IOS
+   * El tipus de lletra serà  lletra Calibri tant per a encapçalats com per a la resta dels continguts
+   * El color corporatiu serà el taronja
+   * El logo de l' aplicació haurà d' aparèixer en totes i cadascuna de les pantalles
+   * L’aplicació haurà de suportar un màxim de 1000 usuaris connectats simultàniament
+   * El temps de resposta màxim de 5 milisegons un cop realitzada la petició
+   * Les dades hauran d’estar encriptades utilitzant el protocol OpenVPN
+   * La interfície de l’aplicació haurà de ser amigable per a l’usuari
+   * La interfície haurà de ser responsive
