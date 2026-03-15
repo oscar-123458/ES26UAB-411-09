@@ -93,3 +93,23 @@ ALTRES CONSIDERACIONS:
    * Les dades hauran d’estar encriptades utilitzant el protocol OpenVPN
    * La interfície de l’aplicació haurà de ser amigable per a l’usuari
    * La interfície haurà de ser responsive
+
+ENLLAÇOS:
+* Trello
+   * https://trello.com/b/2sgNzUXf/es26uab-411-09
+* GitHub
+   * https://github.com/oscar-123458/ES26UAB-411-09
+
+USUARIS IDENTIFICATS:
+* Usuari no registrat
+   * Tots aquells usuaris que accedeixen a l’aplicació sense iniciar sessió. Poden consultar els diferents menús disponibles a la plataforma. Es requereix que es registrin amb un compte si volen aconseguir accés a la resta de funcions de l’aplicació
+* Usuari registrat
+   * Usuaris registrats independentment dels seus rols
+* Usuari client
+   * Aquells que tinguin assignat el rol de client podran escollir plats i menús a més de poder encarregar menús, personalitzar el seu perfil, proposar plats, consultar els diferents cuiners de l’aplicació i valorar les comandes
+* Usuari cuiner
+   * Aquells que tinguin assignat el rol de cuiner podran anunciar la seva disponibilitat, acceptar encàrrecs, lliurar-los, penjar els seus menús i cobrar pels plats preparats
+* Usuari repartidor
+   * Treballadors contractats per l'aplicació. Poden actualitzar el progrés de les comandes, modificar la seva disponibilitat i ubicació, obtenir la ruta òptima entre cuiners i clients i ingressar diners al seu compte associat
+* Sistema
+   * La plataforma i serveis proveïts per l’aplicació així com els servidors que processen i guarden dades dels usuaris, perfils, transaccions i comandes
