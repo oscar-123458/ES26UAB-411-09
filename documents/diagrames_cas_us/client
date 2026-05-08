@@ -1,0 +1,37 @@
+@startuml
+left to right direction
+
+actor client
+actor gps
+actor banc
+
+client -- (fer comanda)
+(fer comanda) <.. (modificar plats) : <<extend>>
+(fer comanda) <.. (valorar comanda) : <<extend>>
+(fer comanda) <.. (repetir comanda) : <<extend>>
+(fer comanda) <.. (reservar comanda) : <<extend>>
+
+
+
+
+
+client -- (veure historial)
+
+client -- (proposar plat)
+(proposar plat) <.. (xat) : <<extend>>
+
+
+client -- (seguiment comanda)
+
+(mostrar mapa) -- gps
+
+client -- (tancar comanda)
+(tancar comanda) <.. (pagar comanda) : <<include>>
+
+(pagar comanda) -- banc
+
+client -- (canviar vista)
+(canviar vista) <.. (consultar menus) : <<extend>>
+
+
+@enduml

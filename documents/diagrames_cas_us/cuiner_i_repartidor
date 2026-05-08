@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+
+actor cuiner
+actor repartidor
+actor banc
+actor gps
+
+(rebre pagament)
+(compartir ubicació)
+
+' Cuiner
+cuiner -- (xat)
+cuiner -- (acceptar propostes)
+cuiner -- (rebre pagament)
+cuiner -- (acceptar/rebutjar comanda)
+cuiner -- (gestionar catàleg)
+
+' Repartidor
+repartidor -- (compartir ubicació)
+repartidor -- (rebre pagament)
+repartidor -- (acceptar enviament)
+repartidor -- (actualitzar estat enviament)
+
+' Sistemas externos
+ (rebre pagament) -- banc
+ (compartir ubicació) -- gps
+
+@enduml

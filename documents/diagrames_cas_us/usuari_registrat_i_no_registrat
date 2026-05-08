@@ -1,0 +1,19 @@
+@startuml
+left to right direction
+
+actor usuari_no_registrat
+actor usuari
+
+usuari_no_registrat <|-- usuari
+
+usuari_no_registrat -- (crear compte)
+usuari_no_registrat -- (consultar menus)
+usuari_no_registrat -- (canviar idioma)
+usuari -- (iniciar sessió)
+(consultar menus) <.. (cercar plat/cuiner) : <<extend>>
+
+
+usuari -- (modificar perfil)
+usuari -- (donar de baixa)
+
+@enduml
