@@ -10,9 +10,7 @@ client -- (fer comanda)
 (fer comanda) <.. (valorar comanda) : <<extend>>
 (fer comanda) <.. (repetir comanda) : <<extend>>
 (fer comanda) <.. (reservar comanda) : <<extend>>
-
-
-
+(fer comanda) <.. (obtenir punts) : <<include>>
 
 (fer comanda) -- (veure historial)
 
