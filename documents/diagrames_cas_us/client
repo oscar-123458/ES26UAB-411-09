@@ -2,9 +2,9 @@
 left to right direction
 
 actor client
-actor gps
-actor banc
+actor "TPV banc"
 
+client -- (consultar menus)
 client -- (fer comanda)
 (fer comanda) <.. (modificar plats) : <<extend>>
 (fer comanda) <.. (valorar comanda) : <<extend>>
@@ -14,8 +14,7 @@ client -- (fer comanda)
 
 
 
-
-client -- (veure historial)
+(fer comanda) -- (veure historial)
 
 client -- (proposar plat)
 (proposar plat) <.. (xat) : <<extend>>
@@ -23,15 +22,11 @@ client -- (proposar plat)
 
 client -- (seguiment comanda)
 
-(mostrar mapa) -- gps
-
 client -- (tancar comanda)
 (tancar comanda) <.. (pagar comanda) : <<include>>
 
-(pagar comanda) -- banc
+(pagar comanda) -- "TPV banc"
 
-client -- (canviar vista)
-(canviar vista) <.. (consultar menus) : <<extend>>
 
 
 @enduml

@@ -3,27 +3,26 @@ left to right direction
 
 actor cuiner
 actor repartidor
-actor banc
-actor gps
+actor "TPV banc"
+actor "API Google Maps"
 
 (rebre pagament)
 (compartir ubicació)
 
-' Cuiner
 cuiner -- (xat)
-cuiner -- (acceptar propostes)
+cuiner -- (acceptar/rebutjar plats personalitzats)
 cuiner -- (rebre pagament)
 cuiner -- (acceptar/rebutjar comanda)
 cuiner -- (gestionar catàleg)
+cuiner -- (gestionar disponibilitat)
 
-' Repartidor
 repartidor -- (compartir ubicació)
 repartidor -- (rebre pagament)
 repartidor -- (acceptar enviament)
 repartidor -- (actualitzar estat enviament)
+repartidor -- (consultar historial)
 
-' Sistemas externos
- (rebre pagament) -- banc
- (compartir ubicació) -- gps
+ (rebre pagament) -- "TPV banc"
+ (compartir ubicació) -- "API Google Maps"
 
 @enduml
