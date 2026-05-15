@@ -5,6 +5,7 @@ actor client
 actor "TPV banc"
 
 client -- (consultar menus)
+client -- (veure historial)
 client -- (fer comanda)
 (fer comanda) <.. (modificar plats) : <<extend>>
 (fer comanda) <.. (valorar comanda) : <<extend>>
