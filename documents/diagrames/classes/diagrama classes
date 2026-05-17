@@ -46,7 +46,7 @@ Enviament "0..*" -- "1" Repartidor : assignat a >
 
 ' Interaccions Socials
 Client "1" -- "0..*" Valoració : realitza >
-Valoració "0..*" -- "1" Comanda : puntua >
+Valoració "1" -- "1" Comanda : puntua >
 Client "1" -- "0..1" Xat : inicia >
 Cuiner "1" -- "0..1" Xat : respon >
 
