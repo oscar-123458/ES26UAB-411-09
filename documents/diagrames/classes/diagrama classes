@@ -1,22 +1,17 @@
 @startuml
 
-' Definició d'Entitats (Actors i Gestió d'Usuaris)
 class UsuariNoRegistrat
 class UsuariRegistrat
 class Client
 class Cuiner
 class Repartidor
 
-' Relacions d'Herència
-' L'Usuari Registrat pot fer tot el que fa un No Registrat (herència de funcionalitat)
 UsuariNoRegistrat <|-- UsuariRegistrat
 
-' Els rols específics hereten de l'Usuari Registrat (tenen perfil, login, etc.)
 UsuariRegistrat <|-- Client
 UsuariRegistrat <|-- Cuiner
 UsuariRegistrat <|-- Repartidor
 
-' Definició d'Entitats (Domini del Negoci)
 class Menu
 class Plat
 class Cataleg
@@ -25,29 +20,32 @@ class Pagament
 class Enviament
 class Valoració
 class Xat
+class Alergens
+class Ingredients
+class Historial
 
-' Relacions de l'Usuari No Registrat
 UsuariNoRegistrat "0..*" -- "1..*" Menu : consulta >
 
-' Relacions del Sistema de Menús i Plats
-Cataleg "1" *-- "1..*" Menu : organitzat en >
-Menu "1" *-- "1..*" Plat : conté >
+Cataleg "1" -- "1..*" Plat : conté >
+Menu "1" -- "1..*" Cataleg : té >
 Cuiner "1" -- "1" Cataleg : gestiona >
 
-' Relacions de Negoci
 Client "1" -- "0..*" Comanda : realitza >
 Comanda "1..*" -- "1..*" Plat : inclou >
 Comanda "0..*" -- "1" Cuiner : preparada per >
 
-' Processos Post-Comanda
 Comanda "1" -- "1" Pagament : genera >
 Comanda "1" -- "0..1" Enviament : té >
 Enviament "0..*" -- "1" Repartidor : assignat a >
 
-' Interaccions Socials
 Client "1" -- "0..*" Valoració : realitza >
 Valoració "1" -- "1" Comanda : puntua >
 Client "1" -- "0..1" Xat : inicia >
 Cuiner "1" -- "0..1" Xat : respon >
+Plat "1" -- "0..*" Alergens : conté >
+Plat "1" -- "1..*" Ingredients : conté >
+Client "1" -- "1" Historial : té >
+Historial "1" -- "0..*" Comanda : conté >
+
 
 @enduml
