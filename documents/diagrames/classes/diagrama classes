@@ -23,6 +23,7 @@ class Xat
 class Alergens
 class Ingredients
 class Historial
+class Missatge
 
 UsuariNoRegistrat "0..*" -- "1..*" Menu : consulta >
 
@@ -40,6 +41,7 @@ Enviament "0..*" -- "1" Repartidor : assignat a >
 
 Client "1" -- "0..*" Valoració : realitza >
 Valoració "1" -- "1" Comanda : puntua >
+Xat "1" -- "0..*" Missatge : conté >
 Client "1" -- "0..1" Xat : inicia >
 Cuiner "1" -- "0..1" Xat : respon >
 Plat "1" -- "0..*" Alergens : conté >
