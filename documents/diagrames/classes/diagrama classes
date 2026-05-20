@@ -14,6 +14,7 @@ UsuariRegistrat <|-- Repartidor
 
 class Menu
 class Plat
+class Plat_personalitzat
 class Cataleg
 class Comanda
 class Pagament
@@ -24,6 +25,7 @@ class Alergens
 class Ingredients
 class Historial
 class Missatge
+class Subscripcio
 
 UsuariNoRegistrat "0..*" -- "1..*" Menu : consulta >
 
@@ -34,6 +36,7 @@ Cuiner "1" -- "1" Cataleg : gestiona >
 Client "1" -- "0..*" Comanda : realitza >
 Comanda "1..*" -- "1..*" Plat : inclou >
 Comanda "0..*" -- "1" Cuiner : preparada per >
+Client "1" -- "0..1" Subscripcio : té >
 
 Comanda "1" -- "1" Pagament : genera >
 Comanda "1" -- "0..1" Enviament : té >
@@ -46,6 +49,7 @@ Client "1" -- "0..1" Xat : inicia >
 Cuiner "1" -- "0..1" Xat : respon >
 Plat "1" -- "0..*" Alergens : conté >
 Plat "1" -- "1..*" Ingredients : conté >
+Plat "1" -- "0..*" Plat_personalitzat : pot ser >
 Client "1" -- "1" Historial : té >
 Historial "1" -- "0..*" Comanda : conté >
 
