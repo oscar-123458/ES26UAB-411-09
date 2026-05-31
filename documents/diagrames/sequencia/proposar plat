@@ -1,0 +1,30 @@
+@startuml
+
+actor Client
+actor Cuiner
+
+boundary "Interficie" as Proposta
+control Sistema
+database "Base de dades" as BD
+
+Client -> Proposta : Descriure detalladament\nel plat suggerit
+Proposta -> Sistema : Enviar suggeriment
+
+Sistema -> BD : Guardar suggeriment
+BD --> Sistema : Suggeriment guardat
+
+Sistema -> BD : Penjar suggeriment
+BD --> Sistema : Suggeriment disponible
+
+Sistema --> Cuiner : Mostrar suggeriment
+
+opt Obrir xat per discutir el plat
+    Cuiner -> Sistema : Sol·licitar obrir xat
+    Sistema --> Client : Notificar
+    Client -> Sistema : Enviar missatge
+    Sistema --> Cuiner : Mostrar missatge
+    Cuiner -> Sistema : Respondre missatge
+    Sistema --> Client : Mostrar resposta
+end
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+
+actor Cuiner
+actor Client
+
+boundary "Interficie" as UI
+control Sistema
+database "Base de dades" as BD
+
+Cuiner -> UI : Accedir a plats personalitzats
+UI -> Sistema : Sol·licitar plats suggerits
+
+Sistema -> BD : Obtenir plats suggerits
+BD --> Sistema : Llista de plats suggerits
+Sistema --> UI : Mostrar suggeriments
+
+Cuiner -> UI : Acceptar o rebutjar plat
+
+alt Acceptar
+    UI -> Sistema : Acceptar plat
+    Sistema -> BD : Marcar com acceptat
+    Sistema -> Sistema : Crear xat privat
+else Rebutjar
+    UI -> Sistema : Rebutjar plat
+    Sistema -> BD : Marcar com rebutjat
+end
+
+@enduml

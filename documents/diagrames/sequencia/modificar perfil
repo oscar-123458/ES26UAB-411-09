@@ -1,0 +1,32 @@
+@startuml
+
+actor "Usuari registrat" as Usuari
+
+boundary "Interficie" as Perfil
+control Sistema
+database "Base de dades" as BD
+
+Usuari -> Perfil : Accedir a modificar el perfil
+Perfil -> Sistema : Sol·licitar configuració actual
+
+Sistema -> BD : Obtenir dades del perfil
+BD --> Sistema : Configuració actual del compte
+
+Sistema --> Perfil : Mostrar configuració actual del compte
+
+Usuari -> Perfil : Modificar paràmetres del perfil
+Perfil -> Sistema : Enviar canvis
+
+alt Canvi de rol o eliminació del compte
+    Sistema --> Perfil : Alertar per a una segona confirmació
+    Perfil --> Usuari : Sol·licitar confirmació
+    Usuari -> Perfil : Confirmar operació
+    Perfil -> Sistema : Confirmació rebuda
+end
+
+Sistema -> BD : Aplicar canvis
+BD --> Sistema : Canvis aplicats
+
+Sistema --> Perfil : Confirmar modificació
+
+@enduml

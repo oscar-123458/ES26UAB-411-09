@@ -1,0 +1,28 @@
+@startuml
+
+actor Client
+
+boundary "Interficie" as Valoracio
+control Sistema
+database "Base de dades" as BD
+
+Client -> Valoracio : Seleccionar la comanda rebuda
+Valoracio -> Sistema : Sol·licitar formulari de valoració
+
+Sistema --> Valoracio : Mostrar formulari
+
+Client -> Valoracio : Emplenar els camps
+Valoracio -> Sistema : Enviar valoració
+
+alt Informació completa i vàlida
+    Sistema -> BD : Guardar valoració
+    BD --> Sistema : Valoració guardada
+    Sistema -> BD : Processar valoració
+    BD --> Sistema : Valoració processada
+    Sistema --> Valoracio : Confirmar valoració
+else Informació incompleta o no vàlida
+    Sistema --> Valoracio : Alertar que hi ha camps\nobligatoris en blanc o dades no vàlides
+    Valoracio --> Client : Mostrar missatge d'error
+end
+
+@enduml

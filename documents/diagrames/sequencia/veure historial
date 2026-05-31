@@ -1,0 +1,32 @@
+@startuml
+
+actor Client
+
+boundary "Interficie" as Historial
+control Sistema
+database "Base de dades" as BD
+
+Client -> Historial : Entrar a l'historial
+Historial -> Sistema : Sol·licitar historial
+
+Sistema -> BD : Obtenir encàrrecs del client
+BD --> Sistema : Encàrrecs del client
+
+Sistema --> Historial : Mostrar tots els encàrrecs fets pel client
+
+Client -> Historial : Escollir un plat o menú\nper tornar-lo a encarregar
+Historial -> Sistema : Sol·licitar tornar a encarregar
+
+Sistema -> BD : Comprovar disponibilitat
+
+alt Menú o plat disponible
+    BD --> Sistema : Disponible
+    Sistema -> BD : Fer la comanda de nou
+    BD --> Sistema : Comanda registrada
+    Sistema --> Historial : Confirmar comanda
+else Ítem no disponible
+    BD --> Sistema : No disponible
+    Sistema --> Historial : Mostrar missatge d'error:\n"No s'ha trobat la comanda de l'historial"
+end
+
+@enduml
