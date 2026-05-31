@@ -1,0 +1,55 @@
+@startuml
+
+actor "Usuari" as user
+boundary "Interfície" as ui
+control "Gestor de Menús" as ctrl
+database "Base de Dades" as db
+
+== Flux Principal ==
+user -> ui : Accedeix a la secció de menús
+activate ui
+ui -> ctrl : Sol·licita menús
+activate ctrl
+ctrl -> db : Consulta menús disponibles
+activate db
+db -> ctrl : Retorna dades
+deactivate db
+ctrl -> ctrl : Ordena per valoració\ni aplica restriccions (filtres)
+ctrl -> ui : Mostra menús processats
+deactivate ctrl
+
+== Subflux 1: Cerca / Flux Alternatiu ==
+opt L'usuari realitza una cerca
+    user -> ui : Especifica paraules clau o vista
+    ui -> ctrl : Executa cerca
+    activate ctrl
+    ctrl -> db : Consulta plats/cuiners de proximitat
+    activate db
+
+    alt Resultats trobats
+        db -> ctrl : Retorna resultats
+        ctrl -> ctrl : Ordena per rellevància
+        ctrl -> ui : Mostra resultats ordenats
+    else Ítem no trobat (Flux alternatiu)
+        db -> ctrl : Retorna llista buida
+        deactivate db
+        ctrl -> ui : Notifica error de cerca
+        deactivate ctrl
+    end
+end
+
+== Subflux 2: Detalls del plat ==
+opt L'usuari consulta un plat
+    user -> ui : Escull consultar ingredients d'un plat
+    ui -> ctrl : Sol·licita detalls del plat
+    activate ctrl
+    ctrl -> db : Consulta informació del plat
+    activate db
+    db -> ctrl : Retorna dades detallades
+    deactivate db
+    ctrl -> ui : Presenta informació detallada\n(ingredients, al·lèrgens, adaptacions)
+    deactivate ctrl
+    deactivate ui
+end
+
+@enduml

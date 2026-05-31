@@ -1,0 +1,86 @@
+@startuml
+skinparam style strictuml
+
+actor "Client" as client
+boundary "App / Interfície" as ui
+control "Controlador de Comandes" as ctrl
+entity "Servei de Pagaments" as pay
+database "Base de Dades" as db
+actor "Sistema Bancari Extern" as bank
+
+client -> ui : Inicia encàrrec (plats seleccionats)
+activate ui
+ui -> ctrl : Sol·licita iniciar comanda
+activate ctrl
+
+' Flux alternatiu: Comprovació de límit de comandes
+ctrl -> db : Consulta comandes actives del client
+activate db
+db --> ctrl : Nombre de comandes
+deactivate db
+
+alt Més de 3 comandes actives
+    ctrl --> ui : Error: Límit de comandes assolit
+    ui --> client : Mostra missatge d'error i finalitza
+else Menys de 3 comandes actives
+    ' Flux alternatiu: Plat / cuiner no disponible
+    ctrl -> db : Comprova disponibilitat
+    activate db
+    db --> ctrl : Estat de disponibilitat
+    deactivate db
+
+    alt No disponible en aquest moment
+        ctrl --> ui : Notifica no disponibilitat
+        ui --> client : Ofereix opció de reservar la comanda
+        opt El client decideix reservar
+            client -> ui : Confirma reserva
+            ui -> ctrl : Processa reserva
+            ctrl -> db : Guarda reserva per a més endavant
+        end
+    else Disponible (Flux principal)
+        client -> ui : Escull plat o menú
+
+        ' Subflux: Modificar ingredients opcionals
+        opt L'usuari modifica ingredients
+            client -> ui : Altera ingredients opcionals
+        end
+
+        ui --> client : Demana mètode de recolliment
+        client -> ui : Introdueix mètode i dades
+
+        ui -> ctrl : Valida dades introduïdes
+        ' Flux alternatiu: Dades no vàlides
+        alt Dades de recolliment no vàlides
+            ctrl --> ui : Retorna error de validació
+            ui --> client : Demana tornar a entrar dades o cancel·lar
+        else Dades vàlides
+            opt L'usuari utilitza descomptes
+                client -> ui : Aplica codi/descompte
+                ui -> ctrl : Recalcula el total
+            end
+
+            client -> ui : Fa el pagament
+            ui -> ctrl : Processa pagament (xifrat)
+            activate pay
+            ctrl -> pay : Sol·licita cobrament segur
+            pay -> bank : Transacció externa (Targeta/PayPal)
+            bank --> pay : Confirmació de pagament
+            pay --> ctrl : Pagament validat i completat
+
+            ctrl -> db : Encarrega la comanda i guarda a l'historial
+
+            ctrl -> pay : Ingressa diners a Cuiner / Repartidor
+            pay -> bank : Transferència a comptes externs
+            deactivate pay
+
+            ctrl -> db : Afegeix punts al compte del client
+
+            ctrl --> ui : Retorna confirmació d'èxit
+            deactivate ctrl
+            ui --> client : Mostra enviament i resum de la comanda
+            deactivate ui
+        end
+    end
+end
+
+@enduml
