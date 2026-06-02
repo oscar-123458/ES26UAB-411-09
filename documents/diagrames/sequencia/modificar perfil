@@ -2,31 +2,32 @@
 
 actor "Usuari registrat" as Usuari
 
-boundary "Interficie" as Perfil
-control Sistema
-database "Base de dades" as BD
+boundary "Interfície Perfil" as IMP
+control "Controlador Perfil" as CP
+entity "PerfilUsuari" as PU
 
-Usuari -> Perfil : Accedir a modificar el perfil
-Perfil -> Sistema : Sol·licitar configuració actual
+Usuari -> IMP : Accedir a modificar perfil
 
-Sistema -> BD : Obtenir dades del perfil
-BD --> Sistema : Configuració actual del compte
+IMP -> CP : sol·licitarConfiguracio()
 
-Sistema --> Perfil : Mostrar configuració actual del compte
+CP -> PU : obtenirDadesPerfil()
+PU --> CP : dadesPerfil
 
-Usuari -> Perfil : Modificar paràmetres del perfil
-Perfil -> Sistema : Enviar canvis
+CP --> IMP : mostrarConfiguracioActual()
+
+Usuari -> IMP : Modificar paràmetres
+IMP -> CP : enviarCanvis()
 
 alt Canvi de rol o eliminació del compte
-    Sistema --> Perfil : Alertar per a una segona confirmació
-    Perfil --> Usuari : Sol·licitar confirmació
-    Usuari -> Perfil : Confirmar operació
-    Perfil -> Sistema : Confirmació rebuda
+    CP --> IMP : sol·licitarSegonaConfirmacio()
+    IMP --> Usuari : Mostrar advertència
+    Usuari -> IMP : Confirmar operació
+    IMP -> CP : confirmacioRebuda()
 end
 
-Sistema -> BD : Aplicar canvis
-BD --> Sistema : Canvis aplicats
+CP -> PU : actualitzarPerfil()
+PU --> CP : canvisAplicats
 
-Sistema --> Perfil : Confirmar modificació
+CP --> IMP : confirmarModificacio()
 
 @enduml

@@ -3,28 +3,63 @@
 actor Client
 actor Cuiner
 
-boundary "Interficie" as Proposta
-control Sistema
-database "Base de dades" as BD
+boundary "Interfície Proposta de Plat" as IPP
+control "Controlador Propostes" as CP
+entity "SuggerimentPlat" as SP
+entity "Xat" as X
+entity "Missatge" as M
 
-Client -> Proposta : Descriure detalladament\nel plat suggerit
-Proposta -> Sistema : Enviar suggeriment
+Client -> IPP : Descriure plat suggerit
+IPP -> CP : enviarSuggeriment()
 
-Sistema -> BD : Guardar suggeriment
-BD --> Sistema : Suggeriment guardat
+CP -> SP : guardarSuggeriment()
+SP --> CP : suggerimentGuardat
 
-Sistema -> BD : Penjar suggeriment
-BD --> Sistema : Suggeriment disponible
+CP -> SP : publicarSuggeriment()
+SP --> CP : suggerimentDisponible
 
-Sistema --> Cuiner : Mostrar suggeriment
+CP --> Cuiner : mostrarSuggeriment()
 
-opt Obrir xat per discutir el plat
-    Cuiner -> Sistema : Sol·licitar obrir xat
-    Sistema --> Client : Notificar
-    Client -> Sistema : Enviar missatge
-    Sistema --> Cuiner : Mostrar missatge
-    Cuiner -> Sistema : Respondre missatge
-    Sistema --> Client : Mostrar resposta
+alt Acceptar proposta
+
+    Cuiner -> CP : acceptarProposta()
+    CP -> SP : marcarAcceptada()
+    SP --> CP : propostaActualitzada
+    CP --> Client : notificarAcceptació()
+
+else Rebutjar proposta
+
+    Cuiner -> CP : rebutjarProposta()
+    CP -> SP : marcarRebutjada()
+    SP --> CP : propostaActualitzada
+    CP --> Client : notificarRebuig()
+
+else Discutir proposta mitjançant xat
+
+    Cuiner -> CP : sol·licitarXat()
+    CP -> X : crearXat()
+    X --> CP : xatCreat
+
+    CP --> Client : notificarSol·licitud()
+
+    loop Intercanvi de missatges
+
+        Client -> CP : enviarMissatge()
+        CP -> M : crearMissatge()
+        M --> CP : missatgeCreat
+        CP -> X : afegirMissatge()
+        X --> CP : missatgeAfegit
+        CP --> Cuiner : mostrarMissatge()
+
+        Cuiner -> CP : respondreMissatge()
+        CP -> M : crearMissatge()
+        M --> CP : missatgeCreat
+        CP -> X : afegirMissatge()
+        X --> CP : missatgeAfegit
+        CP --> Client : mostrarResposta()
+
+    end
+
 end
 
 @enduml

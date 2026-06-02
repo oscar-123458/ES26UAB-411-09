@@ -3,26 +3,42 @@
 actor Cuiner
 actor Client
 
-boundary "Interficie" as UI
-control Sistema
-database "Base de dades" as BD
+boundary "Interfície Plats Personalitzats" as IPP
+control "Controlador Plats Personalitzats" as CPP
+entity "plat_personalitzat" as SP
+entity "Xat" as X
 
-Cuiner -> UI : Accedir a plats personalitzats
-UI -> Sistema : Sol·licitar plats suggerits
+Cuiner -> IPP : Accedir a plats personalitzats
+IPP -> CPP : sol·licitarSuggeriments()
 
-Sistema -> BD : Obtenir plats suggerits
-BD --> Sistema : Llista de plats suggerits
-Sistema --> UI : Mostrar suggeriments
+CPP -> SP : obtenirSuggeriments()
+SP --> CPP : llistaSuggeriments
 
-Cuiner -> UI : Acceptar o rebutjar plat
+CPP --> IPP : mostrarSuggeriments()
+
+Cuiner -> IPP : Acceptar o rebutjar plat
 
 alt Acceptar
-    UI -> Sistema : Acceptar plat
-    Sistema -> BD : Marcar com acceptat
-    Sistema -> Sistema : Crear xat privat
+
+    IPP -> CPP : acceptarPlat()
+
+    CPP -> SP : marcarAcceptat()
+    SP --> CPP : suggerimentActualitzat
+
+    CPP -> X : crearXatPrivat()
+    X --> CPP : xatCreat
+
+    CPP --> Client : notificarAcceptació()
+
 else Rebutjar
-    UI -> Sistema : Rebutjar plat
-    Sistema -> BD : Marcar com rebutjat
+
+    IPP -> CPP : rebutjarPlat()
+
+    CPP -> SP : marcarRebutjat()
+    SP --> CPP : suggerimentActualitzat
+
+    CPP --> Client : notificarRebuig()
+
 end
 
 @enduml

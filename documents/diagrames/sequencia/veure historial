@@ -2,31 +2,32 @@
 
 actor Client
 
-boundary "Interficie" as Historial
-control Sistema
-database "Base de dades" as BD
+boundary "Interfície Historial" as IH
+control "Controlador Historial" as CH
+entity "PerfilClient" as PC
+entity "Comanda" as C
 
-Client -> Historial : Entrar a l'historial
-Historial -> Sistema : Sol·licitar historial
+Client -> IH : Entrar a l'historial
+IH -> CH : sol·licitarHistorial()
 
-Sistema -> BD : Obtenir encàrrecs del client
-BD --> Sistema : Encàrrecs del client
+CH -> PC : obtenirComandes()
+PC --> CH : llistaComandes
 
-Sistema --> Historial : Mostrar tots els encàrrecs fets pel client
+CH --> IH : mostrarComandes()
 
-Client -> Historial : Escollir un plat o menú\nper tornar-lo a encarregar
-Historial -> Sistema : Sol·licitar tornar a encarregar
+Client -> IH : Seleccionar plat o menú
+IH -> CH : tornarAEncarrregar(item)
 
-Sistema -> BD : Comprovar disponibilitat
+CH -> C : comprovarDisponibilitat(item)
 
-alt Menú o plat disponible
-    BD --> Sistema : Disponible
-    Sistema -> BD : Fer la comanda de nou
-    BD --> Sistema : Comanda registrada
-    Sistema --> Historial : Confirmar comanda
-else Ítem no disponible
-    BD --> Sistema : No disponible
-    Sistema --> Historial : Mostrar missatge d'error:\n"No s'ha trobat la comanda de l'historial"
+alt Disponible
+    C --> CH : disponible
+    CH -> C : crearNovaComanda(item)
+    C --> CH : comandaCreada
+    CH --> IH : confirmarComanda()
+else No disponible
+    C --> CH : noDisponible
+    CH --> IH : mostrarError()
 end
 
 @enduml

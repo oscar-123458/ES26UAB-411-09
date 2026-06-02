@@ -2,27 +2,29 @@
 
 actor Client
 
-boundary "Interficie" as Valoracio
-control Sistema
-database "Base de dades" as BD
+boundary "Interfície Valoració" as IVC
+control "Controlador Valoració" as CV
+entity "Valoració" as V
 
-Client -> Valoracio : Seleccionar la comanda rebuda
-Valoracio -> Sistema : Sol·licitar formulari de valoració
+Client -> IVC : Seleccionar la comanda rebuda
+IVC -> CV : sol·licitarFormulari()
 
-Sistema --> Valoracio : Mostrar formulari
+CV --> IVC : mostrarFormulari()
 
-Client -> Valoracio : Emplenar els camps
-Valoracio -> Sistema : Enviar valoració
+Client -> IVC : Emplenar els camps
+IVC -> CV : enviarValoracio()
 
 alt Informació completa i vàlida
-    Sistema -> BD : Guardar valoració
-    BD --> Sistema : Valoració guardada
-    Sistema -> BD : Processar valoració
-    BD --> Sistema : Valoració processada
-    Sistema --> Valoracio : Confirmar valoració
+    CV -> V : guardarValoracio()
+    V --> CV : valoracioGuardada
+
+    CV -> V : processarValoracio()
+    V --> CV : valoracioProcessada
+
+    CV --> IVC : confirmarValoracio()
 else Informació incompleta o no vàlida
-    Sistema --> Valoracio : Alertar que hi ha camps\nobligatoris en blanc o dades no vàlides
-    Valoracio --> Client : Mostrar missatge d'error
+    CV --> IVC : mostrarError()
+    IVC --> Client : Informar de camps obligatoris\no dades no vàlides
 end
 
 @enduml
