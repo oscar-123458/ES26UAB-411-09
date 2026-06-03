@@ -1,10 +1,48 @@
 @startuml
 
-class UsuariNoRegistrat
-class UsuariRegistrat
-class Client
-class Cuiner
-class Repartidor
+class UsuariNoRegistrat {
+  +consultarMenus()
+  + crearCompte()
+}
+
+class UsuariRegistrat {
+  - correu: String
+  - nomUsuari: String
+  - contrasenya: String
+  - adreca: String
+  + iniciarSessio()
+  + modificarPerfil()
+  + donarDeBaixa()
+  + gestionarRols()
+}
+
+class Client {
+  - puntsAcumulats: int
+  + ferComanda()
+  + reservarComanda()
+  + proposarPlat()
+  + valorarComanda()
+  + pagarComanda()
+}
+
+class Cuiner {
+  - compteBancari: String
+  - horarisDisponibilitat: String
+  + gestionarCataleg()
+  + modificarDisponibilitat()
+  + acceptarComanda()
+  + rebutjarComanda()
+  + acceptarPlatPersonalitzat()
+  + rebrePagament()
+}
+
+class Repartidor {
+  - compteBancari: String
+  - ubicacioActual: Coordenades
+  + compartirUbicacio()
+  + actualitzarEstatEnviament()
+  + rebrePagament()
+}
 
 UsuariNoRegistrat <|-- UsuariRegistrat
 
@@ -12,20 +50,81 @@ UsuariRegistrat <|-- Client
 UsuariRegistrat <|-- Cuiner
 UsuariRegistrat <|-- Repartidor
 
-class Menu
-class Plat
-class Plat_personalitzat
-class Cataleg
-class Comanda
-class Pagament
-class Enviament
-class Valoració
-class Xat
-class Alergens
-class Ingredients
-class Historial
-class Missatge
-class Subscripcio
+class Menu {
+  - nomMenu: String
+  + mostrarPlats()
+}
+
+class Plat {
+  - nomPlat: String
+  - descripcio: String
+  - preu: float
+  - disponible: boolean
+}
+
+class Plat_personalitzat {
+  - descripcioProposta: String
+  - estatProposta: String
+}
+
+class Cataleg {
+  + obtenirPlatsDisponibles()
+  + actualitzarCataleg()
+}
+
+class Comanda {
+  - idComanda: int
+  - estat: String
+  - metodeRecollida: String
+  - esReserva: boolean
+  - data: Date
+  + tancarComanda()
+}
+
+class Pagament {
+  - importTotal: float
+  - metode: String
+  - estatPagament: String
+  + processarPagament()
+}
+
+class Enviament {
+  - estatEnviament: String
+  - adrecaLliurament: String
+}
+
+class Valoració {
+  - puntuacio: int
+  - comentari: String
+}
+
+class Xat {
+  - idXat: int
+  + obrirXat()
+}
+
+class Alergens {
+  - nomAlergen: String
+}
+
+class Ingredients {
+  - nomIngredient: String
+  - esOpcional: boolean
+}
+
+class Historial {
+  + obtenirComandesPrèvies()
+}
+
+class Missatge {
+  - contingut: String
+  - dataEnviament: Date
+}
+
+class Subscripcio {
+  - tipus: String
+  - actiu: boolean
+}
 
 UsuariNoRegistrat "0..*" -- "1..*" Menu : consulta >
 
@@ -37,6 +136,7 @@ Client "1" -- "0..*" Comanda : realitza >
 Comanda "1..*" -- "1..*" Plat : inclou >
 Comanda "0..*" -- "1" Cuiner : preparada per >
 Client "1" -- "0..1" Subscripcio : té >
+Client "1" -- "0..*" Alergens : té >
 
 Comanda "1" -- "1" Pagament : genera >
 Comanda "1" -- "0..1" Enviament : té >
@@ -52,6 +152,5 @@ Plat "1" -- "1..*" Ingredients : conté >
 Plat "1" -- "0..*" Plat_personalitzat : pot ser >
 Client "1" -- "1" Historial : té >
 Historial "1" -- "0..*" Comanda : conté >
-
 
 @enduml

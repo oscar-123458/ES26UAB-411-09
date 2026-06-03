@@ -4,17 +4,16 @@ actor "Usuari no registrat" as user
 boundary "Interfície" as page
 control "Gestor de Registre" as ctrl
 entity "Perfil d'Usuari" as profile
-database "Base de Dades" as db
 
 user -> page : Introdueix dades\n(nom, correu, contrasenya, rols)
 
 activate page
 page -> ctrl : Envia dades
 activate ctrl
-ctrl -> db : Comprova que el nom d'usuari no existeix
-activate db
-db -> ctrl : Retorna resultat
-deactivate db
+ctrl -> profile : Comprova que el nom d'usuari no existeix
+activate profile
+profile -> ctrl : Retorna resultat
+deactivate profile
 ctrl -> ctrl : Valida format de dades\n(correu, contrasenya)
 
 alt Validació fallida (flux alternatiu)
@@ -26,13 +25,8 @@ else Validació exitosa (flux principal)
     activate ctrl
     ctrl -> profile : Crea/Actualitza perfil d'usuari\n(amb rols i al·lèrgies)
     activate profile
-    profile -> profile : Assigna rols escollits
     profile -> ctrl : Retorna perfil creat/actualitzat
     deactivate profile
-    ctrl -> db : Guardar perfil
-    activate db
-    db -> ctrl : Confirmació de guardat
-    deactivate db
     ctrl -> page : Confirma registre exitós
 
     ctrl -> page : Mostra menú principal\nsegons perfil escollit

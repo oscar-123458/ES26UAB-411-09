@@ -3,7 +3,7 @@
 actor "Usuari" as user
 boundary "Interfície" as ui
 control "Gestor de Menús" as ctrl
-database "Base de Dades" as db
+entity "Menu" as db
 
 == Flux Principal ==
 user -> ui : Accedeix a la secció de menús

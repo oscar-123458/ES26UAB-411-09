@@ -2,8 +2,8 @@
 skinparam style strictuml
 
 actor "Client" as client
-boundary "App / Interfície" as ui
-control "Controlador de Comandes" as ctrl
+boundary "Interfície Comandes" as ui
+control "Gestor Comandes" as ctrl
 entity "Servei de Pagaments" as pay
 database "Base de Dades" as db
 actor "Sistema Bancari Extern" as bank
