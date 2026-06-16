@@ -1,11 +1,13 @@
 @startuml
-skinparam style strictuml
 
 actor "Client" as client
 boundary "Interfície Comandes" as ui
 control "Gestor Comandes" as ctrl
 entity "Servei de Pagaments" as pay
-database "Base de Dades" as db
+entity "Comanda" as cmd
+entity "Cuiner" as cuiner
+entity "Historial" as hist
+entity "Perfil d'usuari" as perfil
 actor "Sistema Bancari Extern" as bank
 
 client -> ui : Inicia encàrrec (plats seleccionats)
@@ -14,20 +16,20 @@ ui -> ctrl : Sol·licita iniciar comanda
 activate ctrl
 
 ' Flux alternatiu: Comprovació de límit de comandes
-ctrl -> db : Consulta comandes actives del client
-activate db
-db --> ctrl : Nombre de comandes
-deactivate db
+ctrl -> cmd : Consulta comandes actives del client
+activate cmd
+cmd --> ctrl : Nombre de comandes
+deactivate cmd
 
 alt Més de 3 comandes actives
     ctrl --> ui : Error: Límit de comandes assolit
     ui --> client : Mostra missatge d'error i finalitza
 else Menys de 3 comandes actives
     ' Flux alternatiu: Plat / cuiner no disponible
-    ctrl -> db : Comprova disponibilitat
-    activate db
-    db --> ctrl : Estat de disponibilitat
-    deactivate db
+    ctrl -> cuiner : Comprova disponibilitat
+    activate cuiner
+    cuiner --> ctrl : Estat de disponibilitat
+    deactivate cuiner
 
     alt No disponible en aquest moment
         ctrl --> ui : Notifica no disponibilitat
@@ -35,7 +37,7 @@ else Menys de 3 comandes actives
         opt El client decideix reservar
             client -> ui : Confirma reserva
             ui -> ctrl : Processa reserva
-            ctrl -> db : Guarda reserva per a més endavant
+            ctrl -> cmd : Guarda reserva per a més endavant
         end
     else Disponible (Flux principal)
         client -> ui : Escull plat o menú
@@ -61,19 +63,22 @@ else Menys de 3 comandes actives
 
             client -> ui : Fa el pagament
             ui -> ctrl : Processa pagament (xifrat)
-            activate pay
             ctrl -> pay : Sol·licita cobrament segur
+            activate pay
             pay -> bank : Transacció externa (Targeta/PayPal)
+            activate bank
             bank --> pay : Confirmació de pagament
+            deactivate bank
             pay --> ctrl : Pagament validat i completat
+            deactivate pay
 
-            ctrl -> db : Encarrega la comanda i guarda a l'historial
+            ctrl -> hist : Encarrega la comanda i guarda a l'historial
 
             ctrl -> pay : Ingressa diners a Cuiner / Repartidor
             pay -> bank : Transferència a comptes externs
             deactivate pay
 
-            ctrl -> db : Afegeix punts al compte del client
+            ctrl -> perfil : Afegeix punts al compte del client
 
             ctrl --> ui : Retorna confirmació d'èxit
             deactivate ctrl
