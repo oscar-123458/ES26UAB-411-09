@@ -10,7 +10,6 @@ Subgrup: 09
 ### Membres de l'equip:
 - Òscar Raneda Halminen
 - Adam Pérez Pulgarín
-- Jan Real López
 - Iker Urruticoechea Puig
 
 ## Descripció del projecte
