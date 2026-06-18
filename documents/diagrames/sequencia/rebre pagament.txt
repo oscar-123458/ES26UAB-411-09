@@ -1,0 +1,14 @@
+@startuml
+actor "Cuiner / Repartidor" as Actor
+boundary "Interfície Pagaments" as Interficie
+control "Gestor de comandes" as Gestor
+entity "Comanda" as Comanda
+actor "TPV Banc" as TPV
+
+Gestor -> Comanda: obtenirImportIPerfils()
+Comanda --> Gestor: dadesPagament
+Gestor -> TPV: Sol·licitar repartiment d'ingrés(dadesPagament)
+TPV --> Gestor: Confirmar transacció realitzada
+Gestor -> Interficie: Generar avís de pagament rebut
+Interficie --> Actor: Mostrar notificació d'ingrés al compte associat
+@enduml

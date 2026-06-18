@@ -1,0 +1,20 @@
+@startuml
+actor "Cuiner" as Cuiner
+boundary "Interfície Catàleg" as Interficie
+control "Gestor de menú" as Gestor
+entity "Plat" as Plat
+
+Cuiner -> Interficie: Accedir a gestionar catàleg
+Interficie -> Gestor: Sol·licitar dades del catàleg
+Gestor -> Plat: obtenirPlatsDisponibles()
+Plat --> Gestor: llistaPlats
+Gestor --> Interficie: Retornar plats actuals
+Interficie --> Cuiner: Mostrar plats disponibles
+
+Cuiner -> Interficie: Pujar/modificar plats (quantitat, especificacions)
+Interficie -> Gestor: Enviar canvis del catàleg
+Gestor -> Plat: actualitzarPlatsCatàleg()
+Plat --> Gestor: canvisDesats
+Gestor --> Interficie: Confirmar actualització
+Interficie --> Cuiner: Mostrar confirmació de canvis desats
+@enduml

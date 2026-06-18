@@ -1,0 +1,20 @@
+@startuml
+actor "Repartidor" as Repartidor
+boundary "Interfície Repartiment" as Interficie
+control "Gestor de comandes" as Gestor
+entity "Enviament" as Enviament
+
+Repartidor -> Interficie: Seleccionar comanda en curs
+Interficie -> Gestor: Sol·licitar estat actual
+Gestor -> Enviament: obtenirEstatEnviament()
+Enviament --> Gestor: estatActual (detalls)
+Gestor --> Interficie: Retornar detalls de l'enviament
+Interficie --> Repartidor: Mostrar opcions d'estat
+
+Repartidor -> Interficie: Modificar estat (preparant-se, repartint-se, arribat)
+Interficie -> Gestor: Enviar actualització d'estat
+Gestor -> Enviament: actualitzarEstat(nouEstat)
+Enviament --> Gestor: estatActualitzat
+Gestor --> Interficie: Confirmar canvi d'estat
+Interficie --> Repartidor: Mostrar confirmació d'actualització
+@enduml

@@ -1,0 +1,20 @@
+@startuml
+actor "Cuiner" as Cuiner
+boundary "Interfície Disponibilitat" as Interficie
+control "Gestor de registres" as Gestor
+entity "PerfilCuiner" as Perfil
+
+Cuiner -> Interficie: Accedir a la disponibilitat
+Interficie -> Gestor: Sol·licitar horaris actuals
+Gestor -> Perfil: obtenirHorarisDisponibilitat()
+Perfil --> Gestor: horariActual
+Gestor --> Interficie: Retornar estat de disponibilitat
+Interficie --> Cuiner: Mostrar disponibilitat actual
+
+Cuiner -> Interficie: Modificar horaris de disponibilitat
+Interficie -> Gestor: Enviar nous paràmetres d'horari
+Gestor -> Perfil: actualitzarHoraris(nousHoraris)
+Perfil --> Gestor: horariActualitzat
+Gestor --> Interficie: Confirmar canvis aplicats
+Interficie --> Cuiner: Mostrar confirmació d'horari
+@enduml

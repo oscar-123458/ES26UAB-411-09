@@ -1,0 +1,16 @@
+@startuml
+actor "Client" as Client
+boundary "Interfície Seguiment" as Interficie
+control "Gestor de comandes" as Gestor
+entity "Enviament" as Enviament
+boundary "API Google Maps" as Maps
+
+Client -> Interficie: Accedir al seguiment de la comanda
+Interficie -> Gestor: Sol·licitar estat de l'enviament
+Gestor -> Enviament: obtenirDetallsEnviament()
+Enviament --> Gestor: infoEnviament (idRepartidor)
+Gestor -> Maps: Sol·licitar ubicació del repartidor(idRepartidor)
+Maps --> Gestor: Retornar coordenades en temps real
+Gestor --> Interficie: Enviar dades de geolocalització
+Interficie --> Client: Mostrar ubicació al mapa
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+actor "Cuiner" as Cuiner
+boundary "Interfície Comandes" as Interficie
+control "Gestor de comandes" as Gestor
+entity "Comanda" as Comanda
+
+Gestor -> Interficie: Notificar nova comanda entrant
+Interficie --> Cuiner: Mostrar detalls de la comanda
+alt Acceptar comanda
+    Cuiner -> Interficie: Acceptar comanda
+    Interficie -> Gestor: Enviar confirmació d'acceptació
+    Gestor -> Comanda: marcarAcceptada()
+    Comanda --> Gestor: comandaActualitzada
+    Gestor --> Interficie: Confirmar operació
+    Interficie --> Cuiner: Mostrar missatge d'èxit
+else Rebutjar comanda
+    Cuiner -> Interficie: Rebutjar comanda
+    Interficie -> Gestor: Enviar rebuig de comanda
+    Gestor -> Comanda: marcarRebutjada()
+    Comanda --> Gestor: comandaActualitzada
+    Gestor --> Interficie: Confirmar operació
+    Interficie --> Cuiner: Mostrar missatge de cancel·lació
+end
+@enduml
