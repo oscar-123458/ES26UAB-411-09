@@ -1,0 +1,69 @@
+@startuml
+left to right direction
+
+actor client
+actor "TPV banc"
+
+client -- (consultar menus)
+client -- (veure historial)
+client -- (fer comanda)
+(fer comanda) <.. (modificar plats) : <<extend>>
+(fer comanda) <.. (valorar comanda) : <<extend>>
+(fer comanda) <.. (repetir comanda) : <<extend>>
+(fer comanda) <.. (reservar comanda) : <<extend>>
+(fer comanda) <.. (obtenir punts) : <<include>>
+
+(fer comanda) -- (veure historial)
+
+client -- (proposar plat)
+(proposar plat) <.. (xat) : <<extend>>
+
+
+client -- (seguiment comanda)
+
+client -- (tancar comanda)
+(tancar comanda) <.. (pagar comanda) : <<include>>
+
+(pagar comanda) -- "TPV banc"
+
+actor cuiner
+actor repartidor
+actor "TPV banc"
+actor "API Google Maps"
+
+(rebre pagament)
+(compartir ubicació)
+
+cuiner -- (xat)
+cuiner -- (acceptar/rebutjar plats personalitzats)
+cuiner -- (rebre pagament)
+cuiner -- (acceptar/rebutjar comanda)
+cuiner -- (gestionar catàleg)
+cuiner -- (gestionar disponibilitat)
+
+repartidor -- (compartir ubicació)
+repartidor -- (rebre pagament)
+repartidor -- (acceptar enviament)
+repartidor -- (actualitzar estat enviament)
+repartidor -- (consultar historial)
+
+ (rebre pagament) -- "TPV banc"
+ (compartir ubicació) -- "API Google Maps"
+
+
+actor usuari_no_registrat
+actor usuari
+
+usuari_no_registrat <-- usuari
+
+usuari_no_registrat -- (crear compte)
+usuari_no_registrat -- (consultar menus)
+usuari_no_registrat -- (canviar idioma)
+usuari -- (iniciar sessió)
+(consultar menus) <.. (cercar plat/cuiner) : <<extend>>
+
+
+usuari -- (modificar perfil)
+usuari -- (donar de baixa)
+
+@enduml
